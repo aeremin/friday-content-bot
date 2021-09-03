@@ -1,4 +1,5 @@
 import { Update } from 'typegram';
+import { VoteType } from './util';
 
 let gUpdateId = 0;
 let gMessageId = 0;
@@ -36,7 +37,7 @@ export function createPrivateMessageUpdate(text: string): Update {
   };
 }
 
-function createVoteUpdate(userId: number, messageId: number, chatId: number, messageText: string, modifier: '+' | '-'): Update {
+function createVoteUpdate(userId: number, messageId: number, chatId: number, messageText: string, modifier: VoteType): Update {
   return {
     update_id: gUpdateId++,
     callback_query: {
@@ -62,11 +63,11 @@ function createVoteUpdate(userId: number, messageId: number, chatId: number, mes
   };
 }
 
-export function createModeratorVoteUpdate(userId: number, messageText: string, modifier: '+' | '-'): Update {
+export function createModeratorVoteUpdate(userId: number, messageText: string, modifier: VoteType): Update {
   return createVoteUpdate(userId, kModeratorChatMessageId, kModeratorChatId, messageText, modifier);
 }
 
-export function createReaderVoteUpdate(userId: number, messageText: string, modifier: '+' | '-'): Update {
+export function createReaderVoteUpdate(userId: number, messageText: string, modifier: VoteType): Update {
   return createVoteUpdate(userId, kChannelMessageId, kChannelId, messageText, modifier);
 }
 
